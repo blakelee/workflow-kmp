@@ -46,7 +46,7 @@ public interface Compatible {
       value: Any,
       name: String = ""
     ): String {
-      val key = (value as? Compatible)?.compatibilityKey ?: value::class.java.name
+      val key = (value as? Compatible)?.compatibilityKey ?: value::class.simpleName.orEmpty()
 
       return name.takeIf { it.isNotEmpty() }?.let { "$name($key)" } ?: key
     }

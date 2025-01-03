@@ -2,6 +2,7 @@ package com.squareup.workflow1.ui
 
 import com.squareup.workflow1.ui.ViewRegistry.Entry
 import com.squareup.workflow1.ui.ViewRegistry.Key
+import kotlin.js.JsName
 import kotlin.reflect.KClass
 import kotlin.reflect.safeCast
 
@@ -75,7 +76,7 @@ public interface ViewRegistry {
   ) {
     override fun equals(other: Any?): Boolean {
       if (this === other) return true
-      if (javaClass != other?.javaClass) return false
+      if (this::class != other?.let { it::class }) return false
 
       other as Key<*, *>
 
@@ -158,6 +159,7 @@ public fun ViewRegistry(vararg bindings: Entry<*>): ViewRegistry =
  * Exists as a separate overload from the other two functions to disambiguate between them.
  */
 @WorkflowUiExperimentalApi
+@JsName("CreateViewRegistry")
 public fun ViewRegistry(): ViewRegistry = TypedViewRegistry()
 
 /**
